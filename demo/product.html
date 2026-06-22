@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Demo Store - Product Details</title>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            line-height: 1.5;
+            color: #1a1a1a;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 700;
+        }
+        .btn {
+            background-color: #0f172a;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background-color: #334155;
+        }
+        .btn-outline {
+            background-color: #fff;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+        .btn-outline:hover {
+            background-color: #f1f5f9;
+        }
+        .product-container {
+            display: flex;
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            gap: 1.5rem;
+        }
+        .product-image-large {
+            flex: 1;
+            background-image: url('images/headphones.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            border-radius: 4px;
+        }
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        h2 {
+            font-size: 1.25rem;
+            margin: 0 0 0.5rem 0;
+        }
+        .price {
+            font-size: 1.1rem;
+            color: #1e293b;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .description {
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Demo Store</h1>
+            <a href="index.html" class="btn btn-outline" style="display: flex; align-items: center; gap: 0.5rem;">
+                <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i> Back to Store
+            </a>
+        </header>
+
+        <div class="product-container">
+            <div class="product-image-large"></div>
+            <div class="product-info">
+                <h2 id="product-title">Product Title</h2>
+                <div class="price" id="product-price">Loading...</div>
+                <p class="description">
+                    Industry-leading noise cancellation with Auto NC Optimizer that auto-optimizes noise canceling based on your wearing conditions and environment. Features up to 30-hour battery life and an ultra-comfortable lightweight design.
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn" style="flex: 1;">Add to Cart</button>
+                    <button class="btn btn-outline" style="width: 90px; display: flex; align-items: center; justify-content: center;" title="Wishlist">
+                        <i data-lucide="heart" style="width: 18px; height: 18px;"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="tracker.js"></script>
+    <script>
+      lucide.createIcons();
+      
+      document.addEventListener('DOMContentLoaded', () => {
+          const params = new URLSearchParams(window.location.search);
+          const title = params.get('title');
+          const price = params.get('price');
+          const image = params.get('image');
+          
+          if (title) document.querySelector('.product-info h2').innerText = title;
+          if (price) document.querySelector('.product-info .price').innerText = price;
+          if (image) document.querySelector('.product-image-large').style.backgroundImage = `url('${image}')`;
+      });
+    </script>
+</body>
+</html>
