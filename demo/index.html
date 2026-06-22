@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Demo Store</title>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            line-height: 1.5;
+            color: #1a1a1a;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .search-bar {
+            padding: 0.4rem 0.8rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            width: 200px;
+            font-size: 0.85rem;
+            outline: none;
+        }
+        .search-bar:focus {
+            border-color: #3b82f6;
+        }
+        .btn {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            width: 90px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .btn:hover {
+            background-color: #2563eb;
+        }
+        .btn-green {
+            background-color: #10b981;
+            color: white;
+        }
+        .btn-green:hover {
+            background-color: #059669;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .product-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+        }
+        .product-image-link {
+            display: block;
+        }
+        .product-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid #f1f5f9;
+            display: block;
+            transition: opacity 0.2s;
+        }
+        .product-image-link:hover .product-image {
+            opacity: 0.85;
+        }
+        .product-info {
+            padding: 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+            color: #1e293b;
+        }
+        .product-price {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 1rem;
+        }
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+        .btn-card {
+            flex: 1;
+            padding: 0.4rem;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 500;
+        }
+        .btn-cart {
+            background-color: #0f172a;
+            color: #fff;
+            border: 1px solid #0f172a;
+        }
+        .btn-cart:hover {
+            background-color: #334155;
+        }
+        .btn-icon {
+            padding: 0.4rem 0.6rem;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            color: #64748b;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-icon:hover {
+            background: #f1f5f9;
+            color: #ef4444;
+            border-color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Demo Store</h1>
+            <div class="header-actions">
+                <input type="text" class="search-bar" placeholder="Search products...">
+                <button class="btn" id="login-btn">Log In</button>
+                <button class="btn btn-green" id="signup-btn">Sign Up</button>
+            </div>
+        </header>
+
+        <div class="grid">
+            <div class="product-card">
+                <a href="product.html" class="product-image-link" title="View Details">
+                    <img src="images/headphones.jpg" alt="AirPods Max 2" class="product-image">
+                </a>
+                <div class="product-info">
+                    <h3 class="product-title">AirPods Max 2</h3>
+                    <div class="product-price">$398.00</div>
+                    <div class="card-actions">
+                        <button class="btn btn-card btn-cart">Add to Cart</button>
+                        <button class="btn-icon" title="Wishlist"><i data-lucide="heart" style="width: 16px; height: 16px;"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <a href="product.html" class="product-image-link" title="View Details">
+                    <img src="images/keyboard.jpg" alt="Magic Keyboard" class="product-image">
+                </a>
+                <div class="product-info">
+                    <h3 class="product-title">Magic Keyboard</h3>
+                    <div class="product-price">$199.00</div>
+                    <div class="card-actions">
+                        <button class="btn btn-card btn-cart">Add to Cart</button>
+                        <button class="btn-icon" title="Wishlist"><i data-lucide="heart" style="width: 16px; height: 16px;"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <a href="product.html" class="product-image-link" title="View Details">
+                    <img src="images/mouse.jpg" alt="Magic Mouse (USB-C)" class="product-image">
+                </a>
+                <div class="product-info">
+                    <h3 class="product-title">Magic Mouse (USB-C)</h3>
+                    <div class="product-price">$99.99</div>
+                    <div class="card-actions">
+                        <button class="btn btn-card btn-cart">Add to Cart</button>
+                        <button class="btn-icon" title="Wishlist"><i data-lucide="heart" style="width: 16px; height: 16px;"></i></button>
+                    </div>
+                </div>
+            </div>
+          
+            
+            <div class="product-card">
+                <a href="product.html" class="product-image-link" title="View Details">
+                    <img src="images/book3.jpg" alt="Harry Potter Book" class="product-image">
+                </a>
+                <div class="product-info">
+                    <h3 class="product-title">Harry Potter Book</h3>
+                    <div class="product-price">$55.99</div>
+                    <div class="card-actions">
+                        <button class="btn btn-card btn-cart">Add to Cart</button>
+                        <button class="btn-icon" title="Wishlist"><i data-lucide="heart" style="width: 16px; height: 16px;"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <a href="product.html" class="product-image-link" title="View Details">
+                    <img src="images/clothing1.jpg" alt="Everlane Premium Organic Cotton T-Shirt" class="product-image">
+                </a>
+                <div class="product-info">
+                    <h3 class="product-title">Vintage Type I Jacket</h3>
+                    <div class="product-price">$30.00</div>
+                    <div class="card-actions">
+                        <button class="btn btn-card btn-cart">Add to Cart</button>
+                        <button class="btn-icon" title="Wishlist"><i data-lucide="heart" style="width: 16px; height: 16px;"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <a href="product.html" class="product-image-link" title="View Details">
+                    <img src="images/clothing2.jpg" alt="Cotton T-Shirt" class="product-image">
+                </a>
+                <div class="product-info">
+                    <h3 class="product-title">Cotton T-Shirt</h3>
+                    <div class="product-price">$395.00</div>
+                    <div class="card-actions">
+                        <button class="btn btn-card btn-cart">Add to Cart</button>
+                        <button class="btn-icon" title="Wishlist"><i data-lucide="heart" style="width: 16px; height: 16px;"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <a href="product.html" class="product-image-link" title="View Details">
+                    <img src="images/sneakers.png" alt="Sneakers" class="product-image">
+                </a>
+                <div class="product-info">
+                    <h3 class="product-title">Sneakers</h3>
+                    <div class="product-price">$440.00</div>
+                    <div class="card-actions">
+                        <button class="btn btn-card btn-cart">Add to Cart</button>
+                        <button class="btn-icon" title="Wishlist"><i data-lucide="heart" style="width: 16px; height: 16px;"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <a href="product.html" class="product-image-link" title="View Details">
+                    <img src="images/charger.png" alt="Wireless Charging Pad" class="product-image">
+                </a>
+                <div class="product-info">
+                    <h3 class="product-title">Wireless Charging Pad</h3>
+                    <div class="product-price">$29.99</div>
+                    <div class="card-actions">
+                        <button class="btn btn-card btn-cart">Add to Cart</button>
+                        <button class="btn-icon" title="Wishlist"><i data-lucide="heart" style="width: 16px; height: 16px;"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <a href="product.html" class="product-image-link" title="View Details">
+                    <img src="images/airpods.png" alt="Apple AirPods Pro 3" class="product-image">
+                </a>
+                <div class="product-info">
+                    <h3 class="product-title">Apple AirPods Pro 3</h3>
+                    <div class="product-price">$149.00</div>
+                    <div class="card-actions">
+                        <button class="btn btn-card btn-cart">Add to Cart</button>
+                        <button class="btn-icon" title="Wishlist"><i data-lucide="heart" style="width: 16px; height: 16px;"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <a href="product.html" class="product-image-link" title="View Details">
+                    <img src="images/vintage.png" alt="Vintage Denim Jacket" class="product-image">
+                </a>
+                <div class="product-info">
+                    <h3 class="product-title">Vintage Denim Jacket</h3>
+                    <div class="product-price">$85.00</div>
+                    <div class="card-actions">
+                        <button class="btn btn-card btn-cart">Add to Cart</button>
+                        <button class="btn-icon" title="Wishlist"><i data-lucide="heart" style="width: 16px; height: 16px;"></i></button>
+                    </div>
+                </div>
+            </div>
+
+           
+
+
+            <div class="product-card">
+                <a href="product.html" class="product-image-link" title="View Details">
+                    <img src="images/sneakers1.png" alt="Nike Air Force 1" class="product-image">
+                </a>
+                <div class="product-info">
+                    <h3 class="product-title">Nike Air Force 1</h3>
+                    <div class="product-price">$120.00</div>
+                    <div class="card-actions">
+                        <button class="btn btn-card btn-cart">Add to Cart</button>
+                        <button class="btn-icon" title="Wishlist"><i data-lucide="heart" style="width: 16px; height: 16px;"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="product-card">
+                <a href="product.html" class="product-image-link" title="View Details">
+                    <img src="images/leather.png" alt="Classic Leather Jacket" class="product-image">
+                </a>
+                <div class="product-info">
+                    <h3 class="product-title">Classic Leather Jacket</h3>
+                    <div class="product-price">$250.00</div>
+                    <div class="card-actions">
+                        <button class="btn btn-card btn-cart">Add to Cart</button>
+                        <button class="btn-icon" title="Wishlist"><i data-lucide="heart" style="width: 16px; height: 16px;"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+
+    <script src="tracker.js"></script>
+    <script>
+      lucide.createIcons();
+      
+      document.querySelectorAll('.product-image-link').forEach(link => {
+          link.addEventListener('click', (e) => {
+              e.preventDefault();
+              const card = link.closest('.product-card');
+              const title = card.querySelector('.product-title').innerText;
+              const price = card.querySelector('.product-price').innerText;
+              const img = card.querySelector('.product-image').getAttribute('src');
+              
+              const params = new URLSearchParams({
+                  title: title,
+                  price: price,
+                  image: img
+              });
+              
+              window.location.href = `product.html?${params.toString()}`;
+          });
+      });
+    </script>
+</body>
+</html>
