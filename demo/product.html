@@ -129,6 +129,7 @@
     <script>
       lucide.createIcons();
       
+      // Load dynamic product data from URL
       document.addEventListener('DOMContentLoaded', () => {
           const params = new URLSearchParams(window.location.search);
           const title = params.get('title');
