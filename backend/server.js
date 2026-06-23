@@ -92,16 +92,20 @@ app.get('/api/sessions/:sessionId/events', async (req, res) => {
 
 app.get('/api/heatmap', async (req, res) => {
   try {
-    const { pageUrl } = req.query;
+    const { pageUrl, pageName } = req.query;
     
-    if (!pageUrl) {
-      return res.status(400).json({ error: 'pageUrl query parameter is required' });
+    if (!pageUrl && !pageName) {
+      return res.status(400).json({ error: 'pageUrl or pageName query parameter is required' });
     }
 
-    const clicks = await Event.find({
-      pageUrl: pageUrl,
-      eventType: 'click'
-    }).select('x y timestamp -_id');
+    const query = { eventType: 'click' };
+    if (pageName) {
+      query.pageName = pageName;
+    } else {
+      query.pageUrl = pageUrl;
+    }
+
+    const clicks = await Event.find(query).select('x y timestamp -_id');
 
     res.json(clicks);
   } catch (error) {

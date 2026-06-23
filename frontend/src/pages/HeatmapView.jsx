@@ -4,7 +4,8 @@ import simpleheat from 'simpleheat';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 // Map pages to their corresponding background URLs
-const HOME_PAGE_URL = `${API_URL}/demo/index.html`;
+// Using pageName instead of pageUrl avoids environment-specific URL mismatches
+const HOME_PAGE_NAME = 'home';
 
 const BG_IMAGE = '/home-bg.png';
 
@@ -22,7 +23,7 @@ export default function HeatmapView() {
     setError(null);
     setLoaded(false);
     try {
-      const res = await fetch(`${API_URL}/api/heatmap?pageUrl=${encodeURIComponent(HOME_PAGE_URL)}`);
+      const res = await fetch(`${API_URL}/api/heatmap?pageName=${HOME_PAGE_NAME}`);
       if (!res.ok) throw new Error('Failed to fetch heatmap data');
       const data = await res.json();
       setClicks(data);
