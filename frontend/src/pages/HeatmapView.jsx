@@ -3,8 +3,9 @@ import simpleheat from 'simpleheat';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-// Map pages to their corresponding background images (user can add these to the public folder)
+// Map pages to their corresponding background URLs
 const HOME_PAGE_URL = `${API_URL}/demo/index.html`;
+
 const BG_IMAGE = '/home-bg.png';
 
 export default function HeatmapView() {
@@ -12,6 +13,7 @@ export default function HeatmapView() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  const [imgSize, setImgSize] = useState({ width: 1200, height: 800 });
   
   const canvasRef = useRef(null);
 
@@ -72,76 +74,59 @@ export default function HeatmapView() {
       const ctx = canvas.getContext('2d');
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
-  }, [clicks, loaded]);
+  }, [clicks, loaded, imgSize]);
 
   return (
     <div>
-      <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="mb-8 flex justify-between items-center">
         <div>
-          <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700 }}>Click Heatmap</h2>
-          <p style={{ color: 'var(--text-muted)', marginTop: '0.25rem' }}>Visualize where users are clicking on your homepage.</p>
+          <h2 className="m-0 text-2xl font-bold">Click Heatmap</h2>
+          <p className="text-slate-500 mt-1">Visualize where users are clicking on your homepage.</p>
         </div>
         <div>
-          {loading && <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Loading...</span>}
+          {loading && <span className="text-slate-500 text-sm">Loading...</span>}
           {loaded && !loading && (
-            <span style={{ color: 'var(--success-color)', fontSize: '0.9rem', fontWeight: 500, backgroundColor: 'rgba(16, 185, 129, 0.1)', padding: '0.5rem 1rem', borderRadius: '20px' }}>
+            <span className="text-emerald-600 text-sm font-medium bg-emerald-500/10 px-4 py-2 rounded-full">
               ✓ {clicks.length} click{clicks.length !== 1 ? 's' : ''} loaded
             </span>
           )}
         </div>
       </div>
 
-      {error && <p style={{ color: 'var(--danger-color)', marginBottom: '1rem' }}>{error}</p>}
+      {error && <p className="text-red-500 mb-4">{error}</p>}
 
-      <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-        <div className="heatmap-container" style={{ 
-          overflow: 'hidden', 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          position: 'relative', 
-          background: '#f8fafc',
-          height: 'auto' // Let height scale automatically based on canvas aspect ratio
-        }}>
+      <div className="bg-white border border-slate-200 rounded-xl p-0 overflow-hidden shadow-sm">
+        <div className="heatmap-container overflow-auto bg-slate-50 p-6 flex justify-center">
           
-          {/* This is where the background image goes! */}
-          {clicks.length > 0 && (
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              backgroundImage: `url(${BG_IMAGE})`,
-              // Using 100% 100% guarantees the image stretches exactly across the bounds of the heatmap canvas
-              backgroundSize: '100% 100%', 
-              backgroundPosition: 'top left',
-              backgroundRepeat: 'no-repeat',
-              opacity: 0.9
-            }} />
-          )}
+          <div className="relative inline-block max-w-full shadow-md border border-slate-200 bg-white">
+            {clicks.length > 0 && (
+              <img 
+                src={BG_IMAGE}
+                alt="Demo Page Background"
+                className="max-w-full h-auto block opacity-90"
+                onLoad={(e) => {
+                  setImgSize({ 
+                    width: e.target.naturalWidth || 1200, 
+                    height: e.target.naturalHeight || 800 
+                  });
+                }}
+              />
+            )}
 
-          <canvas 
-            ref={canvasRef} 
-            width={1200} 
-            height={800} 
-            style={{ 
-              display: clicks.length > 0 ? 'block' : 'none', 
-              width: '100%', // Scale width to 100% of container
-              height: 'auto', // Preserve aspect ratio
-              objectFit: 'contain', 
-              background: 'transparent',
-              position: 'relative',
-              zIndex: 10
-            }} 
-          />
-          
-          {loaded && clicks.length === 0 && (
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'var(--text-muted)', textAlign: 'center' }}>
-              <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🖱️</div>
-              <div>No click data found yet.</div>
-            </div>
-          )}
+            <canvas 
+              ref={canvasRef} 
+              width={imgSize.width} 
+              height={imgSize.height} 
+              className={`absolute top-0 left-0 w-full h-full pointer-events-none z-10 ${clicks.length > 0 ? 'block' : 'hidden'}`}
+            />
+            
+            {loaded && clicks.length === 0 && (
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-500 text-center">
+                <div className="text-3xl mb-2">🖱️</div>
+                <div>No click data found yet.</div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
