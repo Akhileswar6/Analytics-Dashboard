@@ -6,29 +6,22 @@ require('dotenv').config();
 const Event = require('./models/Event');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT
 
-// Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.text({ type: 'text/plain' }));
+app.use(express.text({ type: 'text/plain' })); 
 
-// Serve Demo Site
 const path = require('path');
 app.use('/demo', express.static(path.join(__dirname, '../demo')));
 
-// Database Connection
 const MONGODB_URI = process.env.MONGODB_URI 
 mongoose.connect(MONGODB_URI)
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('MongoDB connection error:', err));
 
-// API Routes
-
-// 1. Receive and store events
 app.post('/api/track', async (req, res) => {
   try {
-    // sendBeacon sends as text/plain, fetch sends as application/json
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
     const { 
       sessionId, eventType, pageUrl, timestamp, x, y,
@@ -54,28 +47,29 @@ app.post('/api/track', async (req, res) => {
   }
 });
 
-// 2. Fetch a list of sessions with event counts
 app.get('/api/sessions', async (req, res) => {
   try {
     const sessions = await Event.aggregate([
+      { $sort: { timestamp: 1 } },
       {
         $group: {
           _id: '$sessionId',
           eventCount: { $sum: 1 },
           lastEventAt: { $max: '$timestamp' },
-          firstEventAt: { $min: '$timestamp' }
+          firstEventAt: { $min: '$timestamp' },
+          pageUrl: { $first: '$pageUrl' }
         }
       },
       { $sort: { lastEventAt: -1 } }
     ]);
     
-    // Format response
     const formattedSessions = sessions.map(s => ({
       sessionId: s._id,
       eventCount: s.eventCount,
       lastEventAt: s.lastEventAt,
       firstEventAt: s.firstEventAt,
-      durationMs: s.lastEventAt - s.firstEventAt
+      durationMs: s.lastEventAt - s.firstEventAt,
+      pageUrl: s.pageUrl
     }));
 
     res.json(formattedSessions);
@@ -85,7 +79,6 @@ app.get('/api/sessions', async (req, res) => {
   }
 });
 
-// 3. Fetch all events for a specific session
 app.get('/api/sessions/:sessionId/events', async (req, res) => {
   try {
     const { sessionId } = req.params;
@@ -97,7 +90,6 @@ app.get('/api/sessions/:sessionId/events', async (req, res) => {
   }
 });
 
-// 4. Fetch click data for a page (for heatmap)
 app.get('/api/heatmap', async (req, res) => {
   try {
     const { pageUrl } = req.query;
@@ -118,7 +110,6 @@ app.get('/api/heatmap', async (req, res) => {
   }
 });
 
-// 5. Analytics Overview Stats
 app.get('/api/stats/overview', async (req, res) => {
   try {
     const totalSessions = (await Event.distinct('sessionId')).length;
@@ -126,7 +117,6 @@ app.get('/api/stats/overview', async (req, res) => {
     const productsViewed = await Event.countDocuments({ eventType: 'product_view' });
     const ordersPlaced = await Event.countDocuments({ eventType: 'order_placed' });
     
-    // Calculate average session time by finding first and last event for each session
     const sessionsData = await Event.aggregate([
       {
         $group: {
@@ -152,28 +142,6 @@ app.get('/api/stats/overview', async (req, res) => {
   }
 });
 
-// 6. Conversion Funnel Stats
-app.get('/api/stats/funnel', async (req, res) => {
-  try {
-    const productViews = await Event.countDocuments({ eventType: 'product_view' });
-    const addToList = await Event.countDocuments({ eventType: 'add_to_cart' });
-    const checkouts = await Event.countDocuments({ eventType: 'checkout_started' });
-    const orders = await Event.countDocuments({ eventType: 'order_placed' });
-
-    res.json({
-      productViews,
-      addToCart: addToList,
-      checkoutStarted: checkouts,
-      ordersPlaced: orders
-    });
-  } catch (error) {
-    console.error('Error fetching funnel stats:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-
-
 
 app.get('/api/stats/products', async (req, res) => {
   try {
@@ -196,8 +164,6 @@ app.get('/api/stats/products', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
-
 
 app.get('/api/stats/behavior', async (req, res) => {
   try {
