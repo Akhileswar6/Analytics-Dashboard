@@ -8,7 +8,7 @@ const EventSchema = new mongoose.Schema({
   },
   eventType: {
     type: String,
-    enum: ['page_view', 'click', 'product_view', 'add_to_cart', 'wishlist_add', 'search', 'checkout_started', 'order_placed', 'session_end', 'login_click', 'signup_click'],
+    enum: ['page_view', 'click', 'product_view', 'add_to_cart', 'wishlist_add', 'search', 'session_end', 'login_click', 'signup_click'],
     required: true
   },
   pageUrl: {
@@ -33,7 +33,6 @@ const EventSchema = new mongoose.Schema({
   productName: { type: String },
   price: { type: Number },
   query: { type: String },
-  orderValue: { type: Number },
   elementText: { type: String },
   elementType: { type: String },
   sessionDuration: { type: Number }

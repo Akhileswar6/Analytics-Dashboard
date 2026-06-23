@@ -26,7 +26,7 @@ app.post('/api/track', async (req, res) => {
     const { 
       sessionId, eventType, pageUrl, timestamp, x, y,
       pageName, productId, productName, price, query, 
-      orderValue, elementText, elementType, sessionDuration
+      elementText, elementType, sessionDuration
     } = body;
     
     if (!sessionId || !eventType || !pageUrl || !timestamp) {
@@ -36,7 +36,7 @@ app.post('/api/track', async (req, res) => {
     const event = new Event({
       sessionId, eventType, pageUrl, timestamp: new Date(timestamp),
       x, y, pageName, productId, productName, price, query, 
-      orderValue, elementText, elementType, sessionDuration
+      elementText, elementType, sessionDuration
     });
 
     await event.save();
@@ -115,7 +115,6 @@ app.get('/api/stats/overview', async (req, res) => {
     const totalSessions = (await Event.distinct('sessionId')).length;
     const totalEvents = await Event.countDocuments();
     const productsViewed = await Event.countDocuments({ eventType: 'product_view' });
-    const ordersPlaced = await Event.countDocuments({ eventType: 'order_placed' });
     
     const sessionsData = await Event.aggregate([
       {
@@ -135,7 +134,7 @@ app.get('/api/stats/overview', async (req, res) => {
       avgSessionTime = Math.round((totalDuration / sessionsData.length) / 1000);
     }
 
-    res.json({ totalSessions, totalEvents, productsViewed, ordersPlaced, avgSessionTime });
+    res.json({ totalSessions, totalEvents, productsViewed, avgSessionTime });
   } catch (error) {
     console.error('Error fetching overview stats:', error);
     res.status(500).json({ error: 'Internal server error' });

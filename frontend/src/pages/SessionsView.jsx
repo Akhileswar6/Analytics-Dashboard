@@ -68,8 +68,6 @@ export default function SessionsView() {
       case 'add_to_cart': return 'Add To Cart';
       case 'wishlist_add': return 'Wishlisted';
       case 'search': return 'Searched';
-      case 'checkout_started': return 'Checkout Started';
-      case 'order_placed': return 'Order Placed';
       case 'session_end': return 'Session Ended';
       case 'login_click': return 'Log In Clicked';
       case 'signup_click': return 'Sign Up Clicked';
@@ -120,7 +118,6 @@ export default function SessionsView() {
       case 'add_to_cart': return evt.productName || evt.productId;
       case 'wishlist_add': return evt.productName || evt.productId;
       case 'search': return `"${evt.query}"`;
-      case 'order_placed': return evt.orderValue ? `$${evt.orderValue}` : null;
       case 'session_end': return evt.sessionDuration ? `Duration: ${formatDuration(evt.sessionDuration * 1000)}` : null;
       case 'login_click': {
         const style = getColorForText('Log In');
@@ -170,8 +167,6 @@ export default function SessionsView() {
       add_to_cart: 'badge-indigo',
       wishlist_add: 'badge-pink',
       search: '',
-      checkout_started: 'badge-indigo',
-      order_placed: 'badge-green',
       session_end: 'badge-gray',
       login_click: 'badge-blue',
       signup_click: 'badge-blue',

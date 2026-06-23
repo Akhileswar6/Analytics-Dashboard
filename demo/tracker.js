@@ -1,5 +1,5 @@
 (function() {
-  const API_ENDPOINT = 'http://localhost:5000/api/track';
+  const API_ENDPOINT = 'https://analytics-dashboard-phw1.onrender.com/api/track';
   const STORAGE_KEY = 'user_session_id';
   const SESSION_START_KEY = 'user_session_start';
 
@@ -42,7 +42,6 @@
   function getPageName() {
     const path = window.location.pathname.toLowerCase();
     if (path.includes('product.html')) return 'product';
-    if (path.includes('checkout.html')) return 'checkout';
     if (path.includes('index.html') || path.endsWith('/demo/')) return 'home';
     return 'unknown';
   }
@@ -82,10 +81,6 @@
     const price = parseFloat(priceStr.replace(/[^0-9.]/g, '')) || 0;
     
     sendEvent('product_view', { productName, price, productId: productName.toLowerCase().replace(/\s+/g, '-') });
-  }
-
-  if (pageName === 'checkout') {
-    sendEvent('checkout_started');
   }
 
   document.addEventListener('click', function(event) {
@@ -141,13 +136,6 @@
           sendEvent('search', { query });
           return;
         }
-      }
-
-      if (closestBtnOrLink.innerText.toLowerCase().includes('place order')) {
-        const totalText = document.querySelector('.summary-total span:last-child')?.innerText || '0';
-        const orderValue = parseFloat(totalText.replace(/[^0-9.]/g, '')) || 0;
-        sendEvent('order_placed', { orderValue });
-        return;
       }
 
       if (closestBtnOrLink.id === 'login-btn' || closestBtnOrLink.innerText.toLowerCase().includes('log in') || closestBtnOrLink.innerText.toLowerCase() === 'login') {
