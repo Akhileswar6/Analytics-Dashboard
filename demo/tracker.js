@@ -1,5 +1,5 @@
 (function() {
-  const API_ENDPOINT = 'https://analytics-dashboard-phw1.onrender.com/api/track';
+  const API_ENDPOINT = 'http://localhost:5000/api/track';
   const STORAGE_KEY = 'user_session_id';
   const SESSION_START_KEY = 'user_session_start';
 
@@ -18,9 +18,9 @@
     let isNewSession = false;
 
     if (sessionId && sessionStart) {
-      const startDate = new Date(parseInt(sessionStart, 10));
-      const nowDate = new Date(now);
-      if (startDate.toDateString() !== nowDate.toDateString()) {
+      const startTime = parseInt(sessionStart, 10);
+      const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+      if (now - startTime >= TWENTY_FOUR_HOURS) {
         isNewSession = true;
       }
     } else {
