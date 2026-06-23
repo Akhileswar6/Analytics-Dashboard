@@ -14,9 +14,22 @@
     let sessionId = localStorage.getItem(STORAGE_KEY);
     let sessionStart = localStorage.getItem(SESSION_START_KEY);
     
-    if (!sessionId) {
+    const now = Date.now();
+    let isNewSession = false;
+
+    if (sessionId && sessionStart) {
+      const startDate = new Date(parseInt(sessionStart, 10));
+      const nowDate = new Date(now);
+      if (startDate.toDateString() !== nowDate.toDateString()) {
+        isNewSession = true;
+      }
+    } else {
+      isNewSession = true;
+    }
+
+    if (isNewSession) {
       sessionId = generateUUID();
-      sessionStart = Date.now().toString();
+      sessionStart = now.toString();
       localStorage.setItem(STORAGE_KEY, sessionId);
       localStorage.setItem(SESSION_START_KEY, sessionStart);
     }
@@ -138,11 +151,11 @@
       }
 
       if (closestBtnOrLink.id === 'login-btn' || closestBtnOrLink.innerText.toLowerCase().includes('log in') || closestBtnOrLink.innerText.toLowerCase() === 'login') {
-        sendEvent('login_click', { elementText: 'Log In', elementType: 'button' });
+        sendEvent('login_click', { elementText: 'Log In', elementType: 'button', x: payload.x, y: payload.y });
         return;
       }
       if (closestBtnOrLink.id === 'signup-btn' || closestBtnOrLink.innerText.toLowerCase().includes('sign up')) {
-        sendEvent('signup_click', { elementText: 'Sign Up', elementType: 'button' });
+        sendEvent('signup_click', { elementText: 'Sign Up', elementType: 'button', x: payload.x, y: payload.y });
         return;
       }
     }
