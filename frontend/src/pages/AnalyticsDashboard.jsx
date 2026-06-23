@@ -37,46 +37,46 @@ export default function AnalyticsDashboard() {
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px', color: '#94a3b8', fontSize: '0.9rem' }}>
+      <div className="flex items-center justify-center h-[300px] text-slate-400 text-sm">
         Loading data...
       </div>
     );
   }
 
   const kpiCards = [
-    { label: 'Total Sessions', value: (overview?.totalSessions || 0).toLocaleString(), bg: '#dbeafe', color: '#1d4ed8' },
-    { label: 'Total Events', value: (overview?.totalEvents || 0).toLocaleString(),bg: '#ede9fe', color: '#6d28d9' },
-    { label: 'Products Viewed', value: (overview?.productsViewed || 0).toLocaleString(), bg: '#ffedd5', color: '#c2410c' },
-    { label: 'Avg. Session Time', value: formatTime(overview?.avgSessionTime || 0), bg: '#dcfce7', color: '#15803d' },
+    { label: 'Total Sessions', value: (overview?.totalSessions || 0).toLocaleString(), bg: 'bg-blue-100', color: 'text-blue-700' },
+    { label: 'Total Events', value: (overview?.totalEvents || 0).toLocaleString(), bg: 'bg-violet-100', color: 'text-violet-700' },
+    { label: 'Products Viewed', value: (overview?.productsViewed || 0).toLocaleString(), bg: 'bg-orange-100', color: 'text-orange-700' },
+    { label: 'Avg. Session Time', value: formatTime(overview?.avgSessionTime || 0), bg: 'bg-green-100', color: 'text-green-700' },
   ];
 
   const tableCards = [
     {
       title: 'Most Viewed Products',
       items: products?.mostViewed,
-      color: '#1d4ed8',
-      bg: '#dbeafe',
+      color: 'text-blue-700',
+      bg: 'bg-blue-100',
       empty: 'No product views tracked yet.',
     },
     {
       title: 'Most Added to Cart',
       items: products?.topAdded,
-      color: '#6d28d9',
-      bg: '#ede9fe',
+      color: 'text-violet-700',
+      bg: 'bg-violet-100',
       empty: 'No cart events tracked yet.',
     },
     {
       title: 'Most Wishlisted',
       items: products?.mostWishlisted,
-      color: '#be123c',
-      bg: '#ffe4e6',
+      color: 'text-rose-700',
+      bg: 'bg-rose-100',
       empty: 'No wishlist events tracked yet.',
     },
     {
       title: 'Most Clicked Elements',
       items: behavior?.mostClickedElements,
-      color: '#c2410c',
-      bg: '#ffedd5',
+      color: 'text-orange-700',
+      bg: 'bg-orange-100',
       empty: 'No click events tracked yet.',
     },
   ];
@@ -84,26 +84,21 @@ export default function AnalyticsDashboard() {
   return (
     <div>
       {/* Page Header */}
-      <div style={{ marginBottom: '1.25rem' }}>
-        <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>Analytics Overview</h2>
-        <p style={{ color: '#64748b', fontSize: '0.8rem', marginTop: '0.2rem' }}>
+      <div className="mb-5">
+        <h2 className="text-lg font-bold text-slate-900 m-0">Analytics Overview</h2>
+        <p className="text-slate-500 text-xs mt-1">
           Real-time behavioral analytics from your demo store.
         </p>
       </div>
 
       {/* KPI Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {kpiCards.map((card) => (
-          <div key={card.label} style={{
-            background: card.bg,
-            borderRadius: '12px',
-            padding: '1.25rem 1.5rem',
-            border: '1px solid rgba(0,0,0,0.06)',
-          }}>
-            <p style={{ fontSize: '0.72rem', fontWeight: 600, color: card.color, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
+          <div key={card.label} className={`${card.bg} rounded-xl p-5 border border-black/5`}>
+            <p className={`text-[0.72rem] font-semibold ${card.color} uppercase tracking-wider mb-2`}>
               {card.label}
             </p>
-            <p style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a', lineHeight: 1, marginBottom: '0.3rem' }}>
+            <p className="text-3xl font-extrabold text-slate-900 leading-none mb-1">
               {card.value}
             </p>
           </div>
@@ -111,50 +106,31 @@ export default function AnalyticsDashboard() {
       </div>
 
       {/* Table Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {tableCards.map((card) => (
-          <div key={card.title} style={{
-            background: '#ffffff',
-            border: '1px solid #e2e8f0',
-            borderRadius: '12px',
-            overflow: 'hidden',
-          }}>
+          <div key={card.title} className="bg-white border border-slate-200 rounded-xl overflow-hidden">
             {/* Card Header */}
-            <div style={{ background: card.bg, padding: '0.9rem 1.25rem', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
-              <p style={{ fontSize: '0.8rem', fontWeight: 700, color: card.color, textTransform: 'uppercase', letterSpacing: '0.07em', margin: 0 }}>{card.title}</p>
+            <div className={`${card.bg} px-5 py-3.5 border-b border-black/5`}>
+              <p className={`text-xs font-bold ${card.color} uppercase tracking-wider m-0`}>{card.title}</p>
             </div>
             {/* Card Body */}
-            <div style={{ padding: '0.5rem 0' }}>
+            <div className="py-2">
               {card.items?.length ? card.items.map((item, i) => (
-                <div key={i} style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '0.6rem 1.25rem',
-                  borderBottom: i < card.items.length - 1 ? '1px solid #f1f5f9' : 'none',
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <span style={{
-                      width: '22px', height: '22px', borderRadius: '50%',
-                      background: card.bg, color: card.color,
-                      fontSize: '0.7rem', fontWeight: 700,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      flexShrink: 0,
-                    }}>{i + 1}</span>
-                    <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#1e293b' }}>
+                <div key={i} className={`flex items-center justify-between px-5 py-2.5 ${i < card.items.length - 1 ? 'border-b border-slate-100' : ''}`}>
+                  <div className="flex items-center gap-3">
+                    <span className={`w-[22px] h-[22px] rounded-full ${card.bg} ${card.color} text-[0.7rem] font-bold flex items-center justify-center shrink-0`}>
+                      {i + 1}
+                    </span>
+                    <span className="text-sm font-medium text-slate-800">
                       {card.isSearch ? `"${item._id}"` : item._id}
                     </span>
                   </div>
-                  <span style={{
-                    fontSize: '0.75rem', fontWeight: 600,
-                    color: card.color,
-                    background: card.bg,
-                    padding: '0.2rem 0.6rem',
-                    borderRadius: '999px',
-                  }}>{item.count}</span>
+                  <span className={`text-xs font-semibold ${card.color} ${card.bg} px-2.5 py-1 rounded-full`}>
+                    {item.count}
+                  </span>
                 </div>
               )) : (
-                <p style={{ padding: '1.5rem 1.25rem', fontSize: '0.8rem', color: '#94a3b8', fontStyle: 'italic' }}>{card.empty}</p>
+                <p className="px-5 py-6 text-xs text-slate-400 italic m-0">{card.empty}</p>
               )}
             </div>
           </div>
