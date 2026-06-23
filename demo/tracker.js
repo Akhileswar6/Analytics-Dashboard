@@ -1,5 +1,8 @@
 (function() {
-  const API_ENDPOINT = 'https://analytics-84z7.onrender.com';
+const API_ENDPOINT =
+  window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://localhost:5000/api/track"
+    : "https://analytics-84z7.onrender.com/api/track";
   const STORAGE_KEY = 'user_session_id';
   const SESSION_START_KEY = 'user_session_start';
 
