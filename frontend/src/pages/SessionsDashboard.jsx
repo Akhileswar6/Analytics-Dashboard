@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 export default function SessionsDashboard() {
   const [loading, setLoading] = useState(true);
   const [overview, setOverview] = useState(null);
@@ -16,11 +18,11 @@ export default function SessionsDashboard() {
     async function fetchDashboardData() {
       try {
         const [resOverview, resFunnel, resProducts, resBehavior, resSessions] = await Promise.all([
-          fetch('http://localhost:5000/api/stats/overview'),
-          fetch('http://localhost:5000/api/stats/funnel'),
-          fetch('http://localhost:5000/api/stats/products'),
-          fetch('http://localhost:5000/api/stats/behavior'),
-          fetch('http://localhost:5000/api/sessions')
+          fetch(`${API_URL}/api/stats/overview`),
+          fetch(`${API_URL}/api/stats/funnel`),
+          fetch(`${API_URL}/api/stats/products`),
+          fetch(`${API_URL}/api/stats/behavior`),
+          fetch(`${API_URL}/api/sessions`)
         ]);
 
         setOverview(await resOverview.json());
@@ -40,7 +42,7 @@ export default function SessionsDashboard() {
   const fetchSessionEvents = async (sessionId) => {
     if (sessionEvents[sessionId]) return; // Already fetched
     try {
-      const res = await fetch(`http://localhost:5000/api/sessions/${sessionId}/events`);
+      const res = await fetch(`${API_URL}/api/sessions/${sessionId}/events`);
       const events = await res.json();
       setSessionEvents(prev => ({ ...prev, [sessionId]: events }));
     } catch (error) {

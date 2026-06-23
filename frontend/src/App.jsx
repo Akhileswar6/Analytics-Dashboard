@@ -5,6 +5,8 @@ import HeatmapView from './pages/HeatmapView';
 import { ArrowRight } from 'lucide-react';
 import './index.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 function App() {
   return (
     <Router>
@@ -18,7 +20,7 @@ function App() {
             <NavLink to="/sessions" className={({ isActive }) => isActive ? 'active' : ''}>Sessions</NavLink>
             <NavLink to="/heatmap" className={({ isActive }) => isActive ? 'active' : ''}>Heatmap</NavLink>
             <NavLink 
-              to="http://localhost:5000/demo/index.html" 
+              to={`${API_URL}/demo/index.html`} 
               className={({ isActive }) => isActive ? 'active' : ''}
               style={{
                 display: 'inline-flex',

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 export default function SessionsView() {
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,7 +12,7 @@ export default function SessionsView() {
   useEffect(() => {
     async function fetchSessions() {
       try {
-        const res = await fetch('http://localhost:5000/api/sessions');
+        const res = await fetch(`${API_URL}/api/sessions`);
         setSessions(await res.json());
       } catch (err) {
         console.error('Error fetching sessions:', err);
@@ -24,7 +26,7 @@ export default function SessionsView() {
   const fetchSessionEvents = async (sessionId) => {
     if (sessionEvents[sessionId]) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/sessions/${sessionId}/events`);
+      const res = await fetch(`${API_URL}/api/sessions/${sessionId}/events`);
       const events = await res.json();
       setSessionEvents(prev => ({ ...prev, [sessionId]: events }));
     } catch (error) {
@@ -268,7 +270,7 @@ export default function SessionsView() {
                     <div style={{ fontSize: '0.75rem', color: '#64748b', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                       <span>Date: {new Date(session.lastEventAt).toLocaleString()}</span>
                       {session.pageUrl && (
-                        <span>URL: <a href={session.pageUrl} target="_blank" rel="noreferrer" onClick={e => e.stopPropagation()} style={{ color: '#3b82f6', textDecoration: 'none' }}>{session.pageUrl.replace('http://localhost:5000', '') || session.pageUrl}</a></span>
+                        <span>URL: <a href={session.pageUrl} target="_blank" rel="noreferrer" onClick={e => e.stopPropagation()} style={{ color: '#3b82f6', textDecoration: 'none' }}>{session.pageUrl.replace(API_URL, '') || session.pageUrl}</a></span>
                       )}
                     </div>
                   </div>

@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import simpleheat from 'simpleheat';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 // Map pages to their corresponding background images (user can add these to the public folder)
-const HOME_PAGE_URL = 'http://localhost:5000/demo/index.html';
+const HOME_PAGE_URL = `${API_URL}/demo/index.html`;
 const BG_IMAGE = '/home-bg.png';
 
 export default function HeatmapView() {
@@ -18,7 +20,7 @@ export default function HeatmapView() {
     setError(null);
     setLoaded(false);
     try {
-      const res = await fetch(`http://localhost:5000/api/heatmap?pageUrl=${encodeURIComponent(HOME_PAGE_URL)}`);
+      const res = await fetch(`${API_URL}/api/heatmap?pageUrl=${encodeURIComponent(HOME_PAGE_URL)}`);
       if (!res.ok) throw new Error('Failed to fetch heatmap data');
       const data = await res.json();
       setClicks(data);

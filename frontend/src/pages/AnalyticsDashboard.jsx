@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 export default function AnalyticsDashboard() {
   const [loading, setLoading] = useState(true);
   const [overview, setOverview] = useState(null);
@@ -10,9 +12,9 @@ export default function AnalyticsDashboard() {
     async function fetchData() {
       try {
         const [resOverview, resProducts, resBehavior] = await Promise.all([
-          fetch('http://localhost:5000/api/stats/overview'),
-          fetch('http://localhost:5000/api/stats/products'),
-          fetch('http://localhost:5000/api/stats/behavior'),
+          fetch(`${API_URL}/api/stats/overview`),
+          fetch(`${API_URL}/api/stats/products`),
+          fetch(`${API_URL}/api/stats/behavior`),
         ]);
         setOverview(await resOverview.json());
         setProducts(await resProducts.json());
