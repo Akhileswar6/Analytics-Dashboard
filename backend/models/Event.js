@@ -28,8 +28,6 @@ const EventSchema = new mongoose.Schema({
     type: Number,
     required: function() { return this.eventType === 'click'; }
   },
-
-
   pageName: { type: String },
   productId: { type: String },
   productName: { type: String },
