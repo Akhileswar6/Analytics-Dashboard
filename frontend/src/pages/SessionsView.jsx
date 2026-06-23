@@ -97,19 +97,12 @@ export default function SessionsView() {
       case 'page_view': return evt.pageName || evt.pageUrl;
       case 'click':
         if (!evt.elementText) return `Coordinates: (${evt.x}, ${evt.y})`;
-        const style = getColorForText(evt.elementText);
+        const style1 = getColorForText(evt.elementText);
         return (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+          <div className="flex items-center gap-1.5 flex-wrap">
             <span>Coordinates: ({evt.x}, {evt.y})</span>
-            <span style={{ color: '#cbd5e1' }}>—</span>
-            <span style={{
-              backgroundColor: style.bg,
-              color: style.color,
-              fontWeight: 600,
-              padding: '0.15rem 0.4rem',
-              borderRadius: '4px',
-              fontSize: '0.75rem'
-            }}>
+            <span className="text-slate-300">—</span>
+            <span style={{ backgroundColor: style1.bg, color: style1.color }} className="font-semibold px-2 py-0.5 rounded text-xs">
               {evt.elementText}
             </span>
           </div>
@@ -120,38 +113,30 @@ export default function SessionsView() {
       case 'search': return `"${evt.query}"`;
       case 'session_end': return evt.sessionDuration ? `Duration: ${formatDuration(evt.sessionDuration * 1000)}` : null;
       case 'login_click': {
-        const style = getColorForText('Log In');
+        const style2 = getColorForText('Log In');
         return (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+          <div className="flex items-center gap-1.5 flex-wrap">
             {evt.x !== undefined && evt.y !== undefined ? (
               <>
                 <span>Coordinates: ({evt.x}, {evt.y})</span>
-                <span style={{ color: '#cbd5e1' }}>—</span>
+                <span className="text-slate-300">—</span>
               </>
             ) : null}
-            <span style={{
-              backgroundColor: style.bg, color: style.color,
-              fontWeight: 600, padding: '0.15rem 0.4rem',
-              borderRadius: '4px', fontSize: '0.75rem'
-            }}>Log In</span>
+            <span style={{ backgroundColor: style2.bg, color: style2.color }} className="font-semibold px-2 py-0.5 rounded text-xs">Log In</span>
           </div>
         );
       }
       case 'signup_click': {
-        const style = getColorForText('Sign Up');
+        const style3 = getColorForText('Sign Up');
         return (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+          <div className="flex items-center gap-1.5 flex-wrap">
             {evt.x !== undefined && evt.y !== undefined ? (
               <>
                 <span>Coordinates: ({evt.x}, {evt.y})</span>
-                <span style={{ color: '#cbd5e1' }}>—</span>
+                <span className="text-slate-300">—</span>
               </>
             ) : null}
-            <span style={{
-              backgroundColor: style.bg, color: style.color,
-              fontWeight: 600, padding: '0.15rem 0.4rem',
-              borderRadius: '4px', fontSize: '0.75rem'
-            }}>Sign Up</span>
+            <span style={{ backgroundColor: style3.bg, color: style3.color }} className="font-semibold px-2 py-0.5 rounded text-xs">Sign Up</span>
           </div>
         );
       }
@@ -162,14 +147,14 @@ export default function SessionsView() {
   const getEventBadgeClass = (type) => {
     const map = {
       page_view: '',
-      click: 'badge-gray',
-      product_view: 'badge-blue',
-      add_to_cart: 'badge-indigo',
-      wishlist_add: 'badge-pink',
+      click: 'bg-slate-100 text-slate-600',
+      product_view: 'bg-blue-100 text-blue-600',
+      add_to_cart: 'bg-indigo-100 text-indigo-600',
+      wishlist_add: 'bg-pink-100 text-pink-600',
       search: '',
-      session_end: 'badge-gray',
-      login_click: 'badge-blue',
-      signup_click: 'badge-blue',
+      session_end: 'bg-slate-100 text-slate-600',
+      login_click: 'bg-blue-100 text-blue-600',
+      signup_click: 'bg-blue-100 text-blue-600',
     };
     return map[type] || '';
   };
@@ -178,7 +163,7 @@ export default function SessionsView() {
     s.sessionId.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  if (loading) return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px', color: '#94a3b8', fontSize: '0.9rem' }}>Loading Sessions...</div>;
+  if (loading) return <div className="flex items-center justify-center h-[300px] text-slate-400 text-sm">Loading Sessions...</div>;
 
   const totalSessions = sessions.length;
   const totalEvents = sessions.reduce((acc, s) => acc + s.eventCount, 0);
@@ -187,95 +172,69 @@ export default function SessionsView() {
   return (
     <div>
       {/* Page Header */}
-      <div style={{ marginBottom: '1.25rem' }}>
-        <h2 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>User Sessions</h2>
-        <p style={{ color: '#64748b', fontSize: '0.8rem', marginTop: '0.2rem' }}>
+      <div className="mb-5" style={{}}>
+        <h2 className="text-lg font-bold text-slate-900 m-0">User Sessions</h2>
+        <p className="text-slate-500 text-xs mt-1">
           Explore individual user journeys and event timelines.
         </p>
       </div>
 
-      <div style={{
-        background: '#ffffff',
-        border: '1px solid #e2e8f0',
-        borderRadius: '12px',
-        overflow: 'hidden',
-      }}>
+      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
         {/* Card Header with Search */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.25rem 1.5rem', borderBottom: '1px solid #e2e8f0' }}>
+        <div className="flex flex-col md:flex-row justify-between md:items-center px-6 py-5 border-b border-slate-200 gap-4">
           <div>
-            <h3 style={{ margin: 0, fontSize: '0.9rem', fontWeight: 700, color: '#0f172a', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Session Directory</h3>
-            <p style={{ margin: 0, fontSize: '0.75rem', color: '#64748b', marginTop: '0.2rem' }}>Detailed list of all captured sessions</p>
+            <h3 className="m-0 text-sm font-bold text-slate-900 uppercase tracking-wide">Session Directory</h3>
+            <p className="m-0 text-xs text-slate-500 mt-1">Detailed list of all captured sessions</p>
           </div>
           <input
             type="text"
             placeholder="Search by Session ID..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            style={{
-              padding: '0.5rem 1rem',
-              borderRadius: '6px',
-              border: '1px solid #cbd5e1',
-              fontSize: '0.8rem',
-              width: '280px',
-              outline: 'none'
-            }}
+            className="px-4 py-2 rounded-md border border-slate-300 text-sm w-full md:w-72 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           />
         </div>
 
         {filteredSessions.length === 0 && (
-          <div style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8', fontSize: '0.85rem' }}>
+          <div className="text-center py-12 text-slate-400 text-sm">
             No sessions match your search criteria.
           </div>
         )}
 
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div className="flex flex-col">
           {filteredSessions.map((session, index) => (
-            <div key={session.sessionId} style={{ borderBottom: index < filteredSessions.length - 1 ? '1px solid #f1f5f9' : 'none' }}>
+            <div key={session.sessionId} className={index < filteredSessions.length - 1 ? 'border-b border-slate-100' : ''}>
               {/* Session Row */}
               <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '1rem 1.5rem',
-                  cursor: 'pointer',
-                  background: expandedSession === session.sessionId ? '#f8fafc' : '#ffffff',
-                  transition: 'background 0.2s'
-                }}
+                className={`flex items-center justify-between px-6 py-4 cursor-pointer transition-colors duration-200 hover:bg-slate-50 ${expandedSession === session.sessionId ? 'bg-slate-50' : 'bg-white'}`}
                 onClick={() => toggleSession(session.sessionId)}
-                onMouseEnter={(e) => e.currentTarget.style.background = '#f8fafc'}
-                onMouseLeave={(e) => e.currentTarget.style.background = expandedSession === session.sessionId ? '#f8fafc' : '#ffffff'}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <div style={{
-                    width: '36px', height: '36px', borderRadius: '8px',
-                    background: '#e2e8f0', color: '#334155',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}>
+                <div className="flex items-center gap-4">
+                  <div className="w-9 h-9 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                       <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#1e293b', marginBottom: '0.2rem' }}>
-                      <span style={{ color: '#64748b', fontWeight: 400, marginRight: '0.3rem' }}>ID:</span>
+                    <div className="text-sm font-semibold text-slate-800 mb-1">
+                      <span className="text-slate-500 font-normal mr-1">ID:</span>
                       {session.sessionId}
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: '#64748b', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                    <div className="text-xs text-slate-500 flex gap-4 flex-wrap">
                       <span>Date: {new Date(session.lastEventAt).toLocaleString()}</span>
                       {session.pageUrl && (
-                        <span>URL: <a href={session.pageUrl} target="_blank" rel="noreferrer" onClick={e => e.stopPropagation()} style={{ color: '#3b82f6', textDecoration: 'none' }}>{session.pageUrl.replace(API_URL, '') || session.pageUrl}</a></span>
+                        <span>URL: <a href={session.pageUrl} target="_blank" rel="noreferrer" onClick={e => e.stopPropagation()} className="text-blue-500 hover:underline">{session.pageUrl.replace(API_URL, '') || session.pageUrl}</a></span>
                       )}
                     </div>
                   </div>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#1e293b' }}>{session.eventCount}</div>
-                    <div style={{ fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase' }}>Events</div>
+                <div className="flex items-center gap-6">
+                  <div className="text-right">
+                    <div className="text-sm font-semibold text-slate-800">{session.eventCount}</div>
+                    <div className="text-[0.7rem] text-slate-500 uppercase">Events</div>
                   </div>
-                  <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>
+                  <div className="text-slate-400 text-xs">
                     {expandedSession === session.sessionId ? '▲' : '▼'}
                   </div>
                 </div>
@@ -283,35 +242,35 @@ export default function SessionsView() {
 
               {/* Session Timeline Details */}
               {expandedSession === session.sessionId && (
-                <div style={{ padding: '1.5rem 2rem 2rem 4.5rem', background: '#f8fafc', borderTop: '1px solid #f1f5f9' }}>
-                  <h4 style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1.25rem', paddingLeft: '80px' }}>Event Timeline</h4>
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div className="pl-6 md:pl-20 pr-6 md:pr-8 py-6 bg-slate-50 border-t border-slate-100">
+                  <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-5 ml-16 md:ml-20">Event Timeline</h4>
+                  <div className="flex flex-col">
                     {sessionEvents[session.sessionId] ? (
                       sessionEvents[session.sessionId].map((evt, idx) => (
-                        <div key={idx} style={{ display: 'flex', marginBottom: idx === sessionEvents[session.sessionId].length - 1 ? '0' : '1.5rem', position: 'relative' }}>
+                        <div key={idx} className={`flex relative ${idx === sessionEvents[session.sessionId].length - 1 ? 'mb-0' : 'mb-6'}`}>
 
                           {/* Timestamp Block */}
-                          <div style={{ width: '60px', flexShrink: 0, textAlign: 'right', paddingRight: '1rem', color: '#64748b', fontSize: '0.85rem' }}>
-                            <div style={{ fontWeight: 500 }}>{formatTimeInfo(evt.timestamp).time}</div>
-                            <div style={{ fontSize: '0.75rem' }}>{formatTimeInfo(evt.timestamp).ampm}</div>
+                          <div className="w-16 shrink-0 text-right pr-4 text-slate-500 text-sm">
+                            <div className="font-medium">{formatTimeInfo(evt.timestamp).time}</div>
+                            <div className="text-xs">{formatTimeInfo(evt.timestamp).ampm}</div>
                           </div>
 
                           {/* Timeline Line & Dot */}
-                          <div style={{ position: 'relative', width: '20px', flexShrink: 0, display: 'flex', justifyContent: 'center' }}>
-                            {/* Vertical Line - extends to the next item unless it's the last one */}
-                            <div style={{ position: 'absolute', top: '0', bottom: idx === sessionEvents[session.sessionId].length - 1 ? '0' : '-1.5rem', width: '2px', background: '#e2e8f0' }}></div>
+                          <div className="relative w-5 shrink-0 flex justify-center">
+                            {/* Vertical Line */}
+                            <div className={`absolute top-0 w-0.5 bg-slate-200 ${idx === sessionEvents[session.sessionId].length - 1 ? 'bottom-0' : '-bottom-6'}`}></div>
 
                             {/* Blue Dot */}
-                            <div style={{ position: 'absolute', top: '6px', width: '8px', height: '8px', borderRadius: '50%', background: '#3b82f6', zIndex: 1 }}></div>
+                            <div className="absolute top-1.5 w-2 h-2 rounded-full bg-blue-500 z-10"></div>
                           </div>
 
                           {/* Content Block */}
-                          <div style={{ flexGrow: 1, paddingLeft: '1rem' }}>
-                            <div style={{ fontSize: '0.9rem', color: '#0f172a', fontWeight: 600, marginBottom: '0.3rem' }}>
+                          <div className="grow pl-4">
+                            <div className="text-sm text-slate-900 font-semibold mb-1">
                               {getEventTitle(evt)}
                             </div>
                             {getEventDetail(evt) && (
-                              <div style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                              <div className="text-sm text-slate-500">
                                 {getEventDetail(evt)}
                               </div>
                             )}
@@ -319,7 +278,7 @@ export default function SessionsView() {
                         </div>
                       ))
                     ) : (
-                      <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>Loading timeline events...</div>
+                      <div className="text-sm text-slate-400 ml-16 md:ml-20">Loading timeline events...</div>
                     )}
                   </div>
                 </div>
