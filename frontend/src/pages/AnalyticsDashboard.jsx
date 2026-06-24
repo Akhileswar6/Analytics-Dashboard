@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Loader from '../components/Loader';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -36,11 +37,7 @@ export default function AnalyticsDashboard() {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center h-[300px] text-slate-400 text-sm">
-        Loading data...
-      </div>
-    );
+    return <Loader text="Loading analytics..." />;
   }
 
   const kpiCards = [

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Loader from '../components/Loader';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -163,7 +164,7 @@ export default function SessionsView() {
     s.sessionId.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  if (loading) return <div className="flex items-center justify-center h-[300px] text-slate-400 text-sm">Loading Sessions...</div>;
+  if (loading) return <Loader text="Loading sessions..." />;
 
   const totalSessions = sessions.length;
   const totalEvents = sessions.reduce((acc, s) => acc + s.eventCount, 0);

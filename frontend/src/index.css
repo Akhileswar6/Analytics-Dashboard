@@ -17,3 +17,33 @@
   50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.4; }
   100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
 }
+
+/* Black Loader */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  gap: 16px;
+}
+
+.loader-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #0f172a;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loader-text {
+  font-size: 0.8rem;
+  color: #0f172a;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
