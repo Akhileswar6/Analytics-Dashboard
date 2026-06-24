@@ -77,11 +77,11 @@ export default function SessionsView() {
   };
 
   const clickColors = [
-    { bg: '#dbeafe', color: '#1d4ed8' }, // Blue
-    { bg: '#ede9fe', color: '#6d28d9' }, // Purple
-    { bg: '#dcfce7', color: '#15803d' }, // Green
-    { bg: '#ffedd5', color: '#c2410c' }, // Orange
-    { bg: '#ffe4e6', color: '#be123c' }  // Pink
+    { bg: '#dbeafe', color: '#1d4ed8' },
+    { bg: '#ede9fe', color: '#6d28d9' },
+    { bg: '#dcfce7', color: '#15803d' },
+    { bg: '#ffedd5', color: '#c2410c' },
+    { bg: '#ffe4e6', color: '#be123c' } 
   ];
 
   const getColorForText = (text) => {
@@ -172,7 +172,6 @@ export default function SessionsView() {
 
   return (
     <div>
-      {/* Page Header */}
       <div className="mb-5" style={{}}>
         <h2 className="text-lg font-bold text-slate-900 m-0">User Sessions</h2>
         <p className="text-slate-500 text-xs mt-1">
@@ -181,7 +180,6 @@ export default function SessionsView() {
       </div>
 
       <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
-        {/* Card Header with Search */}
         <div className="flex flex-col md:flex-row justify-between md:items-center px-6 py-5 border-b border-slate-200 gap-4">
           <div>
             <h3 className="m-0 text-sm font-bold text-slate-900 uppercase tracking-wide">Session Directory</h3>
@@ -205,7 +203,6 @@ export default function SessionsView() {
         <div className="flex flex-col">
           {filteredSessions.map((session, index) => (
             <div key={session.sessionId} className={index < filteredSessions.length - 1 ? 'border-b border-slate-100' : ''}>
-              {/* Session Row */}
               <div
                 className={`flex items-center justify-between px-6 py-4 cursor-pointer transition-colors duration-200 hover:bg-slate-50 ${expandedSession === session.sessionId ? 'bg-slate-50' : 'bg-white'}`}
                 onClick={() => toggleSession(session.sessionId)}
@@ -241,7 +238,6 @@ export default function SessionsView() {
                 </div>
               </div>
 
-              {/* Session Timeline Details */}
               {expandedSession === session.sessionId && (
                 <div className="pl-6 md:pl-20 pr-6 md:pr-8 py-6 bg-slate-50 border-t border-slate-100">
                   <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-5 ml-16 md:ml-20">Event Timeline</h4>
@@ -250,22 +246,17 @@ export default function SessionsView() {
                       sessionEvents[session.sessionId].map((evt, idx) => (
                         <div key={idx} className={`flex relative ${idx === sessionEvents[session.sessionId].length - 1 ? 'mb-0' : 'mb-6'}`}>
 
-                          {/* Timestamp Block */}
                           <div className="w-16 shrink-0 text-right pr-4 text-slate-500 text-sm">
                             <div className="font-medium">{formatTimeInfo(evt.timestamp).time}</div>
                             <div className="text-xs">{formatTimeInfo(evt.timestamp).ampm}</div>
                           </div>
 
-                          {/* Timeline Line & Dot */}
                           <div className="relative w-5 shrink-0 flex justify-center">
-                            {/* Vertical Line */}
                             <div className={`absolute top-0 w-0.5 bg-slate-200 ${idx === sessionEvents[session.sessionId].length - 1 ? 'bottom-0' : '-bottom-6'}`}></div>
 
-                            {/* Blue Dot */}
                             <div className="absolute top-1.5 w-2 h-2 rounded-full bg-blue-500 z-10"></div>
                           </div>
 
-                          {/* Content Block */}
                           <div className="grow pl-4">
                             <div className="text-sm text-slate-900 font-semibold mb-1">
                               {getEventTitle(evt)}

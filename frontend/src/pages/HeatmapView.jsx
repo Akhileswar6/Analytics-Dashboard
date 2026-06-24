@@ -33,7 +33,6 @@ export default function HeatmapView() {
     }
   };
 
-  // Auto-fetch on mount and when date changes
   useEffect(() => {
     fetchHeatmap();
   }, [selectedDate]);
@@ -43,7 +42,6 @@ export default function HeatmapView() {
       const canvas = canvasRef.current;
       const heat = simpleheat(canvas);
 
-      // Scale raw pixel coordinates from the user's viewport to the image dimensions
       const data = clicks.map(c => {
         const vw = c.viewportWidth || 1920;
         const vh = c.viewportHeight || 1080;

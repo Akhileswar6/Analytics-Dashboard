@@ -80,7 +80,6 @@ export default function AnalyticsDashboard() {
 
   return (
     <div>
-      {/* Page Header */}
       <div className="mb-5">
         <h2 className="text-lg font-bold text-slate-900 m-0">Analytics Overview</h2>
         <p className="text-slate-500 text-xs mt-1">
@@ -88,7 +87,6 @@ export default function AnalyticsDashboard() {
         </p>
       </div>
 
-      {/* KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {kpiCards.map((card) => (
           <div key={card.label} className={`${card.bg} rounded-xl p-5 border border-black/5`}>
@@ -102,7 +100,6 @@ export default function AnalyticsDashboard() {
         ))}
       </div>
 
-      {/* Table Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {tableCards.map((card) => (
           <div key={card.title} className="bg-white border border-slate-200 rounded-xl overflow-hidden">
