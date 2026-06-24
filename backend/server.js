@@ -92,6 +92,16 @@ app.get('/api/sessions/:sessionId/events', async (req, res) => {
   }
 });
 
+app.get('/api/heatmap/urls', async (req, res) => {
+  try {
+    const urls = await Event.distinct('pageUrl', { eventType: 'click' });
+    res.json(urls.filter(Boolean).sort());
+  } catch (error) {
+    console.error('Error fetching heatmap URLs:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.get('/api/heatmap', async (req, res) => {
   try {
     const { pageUrl, pageName, date } = req.query;

@@ -103,11 +103,9 @@ export default function AnalyticsDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {tableCards.map((card) => (
           <div key={card.title} className="bg-white border border-slate-200 rounded-xl overflow-hidden">
-            {/* Card Header */}
             <div className={`${card.bg} px-5 py-3.5 border-b border-black/5`}>
               <p className={`text-xs font-bold ${card.color} uppercase tracking-wider m-0`}>{card.title}</p>
             </div>
-            {/* Card Body */}
             <div className="py-2">
               {card.items?.length ? card.items.map((item, i) => (
                 <div key={i} className={`flex items-center justify-between px-5 py-2.5 ${i < card.items.length - 1 ? 'border-b border-slate-100' : ''}`}>
