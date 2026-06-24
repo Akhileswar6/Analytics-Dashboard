@@ -1,21 +1,32 @@
 # Analytics Tracker & Dashboard
 
-A full-stack project for tracking user behavior on a website and visualizing the data through an analytics dashboard. The project consists of a tracking script, a Node.js backend, and a React frontend.
+A full-stack project for tracking user behavior on a website and visualizing the data through an analytics dashboard.
+
+## Overview
+
+This project includes:
+
+- A **tracking script** that captures user interactions
+- A **Node.js + Express backend** for event ingestion and API delivery
+- A **MongoDB database** for storing sessions and events
+- A **React dashboard** for analytics, session exploration, and heatmaps
+- A **demo store** to generate tracking data
 
 ## Tech Stack
 
-- **Frontend**: React.js (Vite), CSS Modules/Vanilla CSS, Lucide Icons
+- **Frontend**: React.js (Vite), Tailwind CSS, Lucide Icons
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB (Mongoose)
-- **Tracking Demo**: Vanilla JavaScript, HTML/CSS
+- **Tracking Demo**: Vanilla JavaScript, HTML, CSS
 
 ## Features
 
-- **Event Tracking**: Captures page views, clicks, product views, add-to-cart, wishlist actions, checkout flows, and custom events like login/signup clicks.
-- **Session Tracking**: Links events to unique user sessions using local storage.
-- **Analytics Dashboard**: Visualizes conversion funnels, top products, most visited pages, and session KPIs.
-- **Session Explorer**: Drill down into individual user sessions and view the chronological timeline of events, including exact click coordinates.
-- **Heatmap Viewer**: Visual representation of user clicks across different pages.
+
+- **Interaction Tracking**: Captures clicks, product views, add-to-cart, wishlist, login, and signup actions
+- **Session Tracking**: Groups events by unique browser sessions using local storage
+- **Analytics Dashboard**: Displays KPIs, top products, top products added to cart and wishlist
+- **Session Explorer**: Shows complete event timelines for individual sessions
+- **Heatmap Viewer**: Visualizes click locations across pages by daywise
 
 ## Setup Steps
 
