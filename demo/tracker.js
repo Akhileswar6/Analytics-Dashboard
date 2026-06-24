@@ -22,8 +22,10 @@ const API_ENDPOINT =
 
     if (sessionId && sessionStart) {
       const startTime = parseInt(sessionStart, 10);
-      const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
-      if (now - startTime >= TWENTY_FOUR_HOURS) {
+      const startDate = new Date(startTime).toLocaleDateString();
+      const currentDate = new Date(now).toLocaleDateString();
+      
+      if (startDate !== currentDate) {
         isNewSession = true;
       }
     } else {
@@ -91,8 +93,10 @@ const API_ENDPOINT =
     const closestBtnOrLink = target.closest('button, a, .btn, .filter-chip');
     
     let payload = {
-      x: event.clientX,
-      y: event.clientY
+      x: Math.round(event.clientX),
+      y: Math.round(event.clientY),
+      viewportWidth: window.innerWidth,
+      viewportHeight: window.innerHeight
     };
 
     if (closestBtnOrLink) {
