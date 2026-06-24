@@ -22,7 +22,7 @@ This project includes:
 ## Features
 
 
-- **Interaction Tracking**: Captures clicks, product views, add-to-cart, wishlist, login, and signup actions
+- **Interaction Tracking**: Captures Page views, clicks, product views, add-to-cart, wishlist, login, and signup actions
 - **Session Tracking**: Groups events by unique browser sessions using local storage
 - **Analytics Dashboard**: Displays KPIs, top products, top products added to cart and wishlist
 - **Session Explorer**: Shows complete event timelines for individual sessions
