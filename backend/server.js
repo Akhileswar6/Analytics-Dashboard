@@ -26,7 +26,8 @@ app.post('/api/track', async (req, res) => {
     const { 
       sessionId, eventType, pageUrl, timestamp, x, y,
       pageName, productId, productName, price, query, 
-      elementText, elementType, sessionDuration
+      elementText, elementType, sessionDuration,
+      viewportWidth, viewportHeight
     } = body;
     
     if (!sessionId || !eventType || !pageUrl || !timestamp) {
@@ -36,7 +37,8 @@ app.post('/api/track', async (req, res) => {
     const event = new Event({
       sessionId, eventType, pageUrl, timestamp: new Date(timestamp),
       x, y, pageName, productId, productName, price, query, 
-      elementText, elementType, sessionDuration
+      elementText, elementType, sessionDuration,
+      viewportWidth, viewportHeight
     });
 
     await event.save();
@@ -92,7 +94,7 @@ app.get('/api/sessions/:sessionId/events', async (req, res) => {
 
 app.get('/api/heatmap', async (req, res) => {
   try {
-    const { pageUrl, pageName } = req.query;
+    const { pageUrl, pageName, date } = req.query;
     
     if (!pageUrl && !pageName) {
       return res.status(400).json({ error: 'pageUrl or pageName query parameter is required' });
@@ -105,7 +107,15 @@ app.get('/api/heatmap', async (req, res) => {
       query.pageUrl = pageUrl;
     }
 
-    const clicks = await Event.find(query).select('x y timestamp -_id');
+    if (date) {
+      const startDate = new Date(date);
+      startDate.setHours(0, 0, 0, 0);
+      const endDate = new Date(startDate);
+      endDate.setDate(endDate.getDate() + 1);
+      query.timestamp = { $gte: startDate, $lt: endDate };
+    }
+
+    const clicks = await Event.find(query).select('x y viewportWidth viewportHeight timestamp -_id');
 
     res.json(clicks);
   } catch (error) {
