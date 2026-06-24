@@ -35,6 +35,8 @@ const EventSchema = new mongoose.Schema({
   query: { type: String },
   elementText: { type: String },
   elementType: { type: String },
+  viewportWidth: { type: Number },
+  viewportHeight: { type: Number },
   sessionDuration: { type: Number }
 });
 
